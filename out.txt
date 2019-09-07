@@ -1,0 +1,49 @@
+<keyword, program> <?, MorseCoding> <?, ;> 
+
+<keyword, function> <?, checkUserInput> <operator, (> <?, userString> <operator, :> <keyword, string> <?, ):> <?, boolean> <?, ;> 
+<keyword, var> 
+<?, valid> <operator, :> <?, boolean> <?, ;> 
+<?, count> <operator, :> <?, integer> <?, ;> 
+<keyword, begin> 
+<?, valid> <operator, :=> <?, true> <?, ;> 
+<operator, for> <?, count> <operator, :=> <?, 1> <keyword, to> <?, length> <operator, (> <?, userString> <operator, )> <keyword, do> 
+<operator, if> <?, ((> <?, ord> <operator, (> <?, userString> <delimiter, [> <?, count> <?, ])> <operator, <> <?, 65> <operator, )> <operator, or> <operator, (> <?, ord> <operator, (> <?, userString> <delimiter, [> <?, count> <?, ])> <operator, >> <?, 90> <?, ))> <operator, and> <operator, (> <?, userString> <delimiter, [> <?, count> <delimiter, ]> <operator, <>> <?, '> <?, ')> <keyword, then> 
+<?, valid> <operator, :=> <?, false> <?, ;> 
+<?, checkUserInput> <operator, :=> <?, valid> <?, ;> 
+<keyword, end> <?, ;> 
+
+<keyword, function> <?, getCharacterCode> <operator, (> <?, character> <operator, :> <?, char> <?, ):> <keyword, string> <?, ;> 
+<keyword, const> 
+<?, translationArray> <operator, :> <keyword, array> <delimiter, [> <?, 0> <?, ..> <?, 25> <delimiter, ]> <keyword, of> <keyword, string> <operator, => <?, ('.-',> <?, '-...',> <?, '-.-.',> <?, '-..',> <?, '.',> <?, '..-.',> <?, '--.',> <?, '....',> <?, '..',> <?, '.---',> <?, '-.-',> <?, '.-..',> <?, '--',> <?, '-.',> <?, '---',> <?, '.--.',> <?, '--.-',> <?, '.-.',> <?, '...',> <?, '-',> <?, '..-',> <?, '...-',> <?, '.--',> <?, '-..-',> <?, '-.--',> <?, '--..');> 
+<keyword, begin> 
+<operator, if> <?, character> <operator, => <?, '> <?, '> <keyword, then> 
+<?, getCharacterCode> <operator, :=> <?, '|> <?, '> 
+<keyword, else> 
+<keyword, begin> 
+<?, getCharacterCode> <operator, :=> <?, translationArray> <delimiter, [> <?, ord> <operator, (> <?, character> <operator, )> <operator, -> <?, 65> <delimiter, ]> <operator, +> <?, '> <?, ';> 
+<keyword, end> <?, ;> 
+<keyword, end> <?, ;> 
+
+<keyword, procedure> <?, main> <?, ();> 
+<keyword, var> 
+<?, userString> <delimiter, ,> <?, codedString> <operator, :> <keyword, string> <?, ;> 
+<?, count> <operator, :> <?, integer> <?, ;> 
+<keyword, begin> 
+<?, write> <?, ('> <?, Enter> <?, a> <keyword, string> <operator, :> <?, ');> 
+<?, readln> <operator, (> <?, userString> <?, );> 
+<operator, if> <?, checkUserInput> <operator, (> <?, upcase> <operator, (> <?, userString> <?, ))> <keyword, then> 
+<keyword, begin> 
+<operator, for> <?, count> <operator, :=> <?, 1> <keyword, to> <?, length> <operator, (> <?, userString> <operator, )> <keyword, do> 
+<keyword, begin> 
+<?, codedString> <operator, :=> <?, concat> <operator, (> <?, codedString> <delimiter, ,> <?, getCharacterCode> <operator, (> <?, upcase> <operator, (> <?, userString> <delimiter, [> <?, count> <?, ])));> 
+<keyword, end> <?, ;> 
+<?, writeln> <operator, (> <?, codedString> <?, );> 
+<keyword, end> 
+<keyword, else> 
+<?, writeln> <?, ('> <?, Invalid> <?, input> <?, !');> 
+<keyword, end> <?, ;> 
+
+<keyword, begin> 
+<?, main> <?, ();> 
+<?, readln> <?, ;> 
+<keyword, end> <delimiter, .> 
