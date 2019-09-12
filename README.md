@@ -19,4 +19,4 @@ Token name | Description | Attached attribute
 
 * lexem
 * type (as keyword, delimiter, operator, ...)
-* number of line with it's first appearance
+* number of line with it's first appearance (for identifiers only)
