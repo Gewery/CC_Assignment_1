@@ -1,49 +1,31 @@
-<keyword, program> <?, MorseCoding> <?, ;> 
+<keyword program "program"> <identifier identifier "MorseCoding"> <delimiter ";"> 
 
-<keyword, function> <?, checkUserInput> <operator, (> <?, userString> <operator, :> <keyword, string> <?, ):> <?, boolean> <?, ;> 
-<keyword, var> 
-<?, valid> <operator, :> <?, boolean> <?, ;> 
-<?, count> <operator, :> <?, integer> <?, ;> 
-<keyword, begin> 
-<?, valid> <operator, :=> <?, true> <?, ;> 
-<operator, for> <?, count> <operator, :=> <?, 1> <keyword, to> <?, length> <operator, (> <?, userString> <operator, )> <keyword, do> 
-<operator, if> <?, ((> <?, ord> <operator, (> <?, userString> <delimiter, [> <?, count> <?, ])> <operator, <> <?, 65> <operator, )> <operator, or> <operator, (> <?, ord> <operator, (> <?, userString> <delimiter, [> <?, count> <?, ])> <operator, >> <?, 90> <?, ))> <operator, and> <operator, (> <?, userString> <delimiter, [> <?, count> <delimiter, ]> <operator, <>> <?, '> <?, ')> <keyword, then> 
-<?, valid> <operator, :=> <?, false> <?, ;> 
-<?, checkUserInput> <operator, :=> <?, valid> <?, ;> 
-<keyword, end> <?, ;> 
+<keyword function "function"> <identifier identifier "checkUserInput"> <undefined "(userString:"> <keyword string "string"> <undefined "):"> <identifier identifier "boolean"> <delimiter ";"> 
+<keyword var "var"> 
+<identifier identifier "valid"> <delimiter ":"> <identifier identifier "boolean"> <delimiter ";"> 
+<identifier identifier "count"> <delimiter ":"> <identifier identifier "integer"> <delimiter ";"> 
+<keyword begin "begin"> 
+<identifier identifier "valid"> <delimiter ":"> <undefined "="> <identifier identifier "true"> <delimiter ";"> 
+<operator identifier "for"> <identifier identifier "count"> <delimiter ":"> <undefined "="> <number "1"> <keyword to "to"> <identifier identifier "length"> <undefined "(userString)"> <keyword do "do"> 
+<operator identifier "if"> <undefined "((ord(userString[count])"> <undefined "<"> <number "65"> <undefined ")"> <operator identifier "or"> <undefined "(ord(userString[count])"> <undefined ">"> <number "90"> <undefined "))"> <operator identifier "and"> <undefined "(userString[count]"> <undefined "<>"> <literal " "> <undefined ")"> <keyword then "then"> 
+<identifier identifier "valid"> <delimiter ":"> <undefined "="> <identifier identifier "false"> <delimiter ";"> 
+<identifier identifier "checkUserInput"> <delimiter ":"> <undefined "="> <identifier identifier "valid"> <delimiter ";"> 
+<keyword end "end"> <delimiter ";"> 
 
-<keyword, function> <?, getCharacterCode> <operator, (> <?, character> <operator, :> <?, char> <?, ):> <keyword, string> <?, ;> 
-<keyword, const> 
-<?, translationArray> <operator, :> <keyword, array> <delimiter, [> <?, 0> <?, ..> <?, 25> <delimiter, ]> <keyword, of> <keyword, string> <operator, => <?, ('.-',> <?, '-...',> <?, '-.-.',> <?, '-..',> <?, '.',> <?, '..-.',> <?, '--.',> <?, '....',> <?, '..',> <?, '.---',> <?, '-.-',> <?, '.-..',> <?, '--',> <?, '-.',> <?, '---',> <?, '.--.',> <?, '--.-',> <?, '.-.',> <?, '...',> <?, '-',> <?, '..-',> <?, '...-',> <?, '.--',> <?, '-..-',> <?, '-.--',> <?, '--..');> 
-<keyword, begin> 
-<operator, if> <?, character> <operator, => <?, '> <?, '> <keyword, then> 
-<?, getCharacterCode> <operator, :=> <?, '|> <?, '> 
-<keyword, else> 
-<keyword, begin> 
-<?, getCharacterCode> <operator, :=> <?, translationArray> <delimiter, [> <?, ord> <operator, (> <?, character> <operator, )> <operator, -> <?, 65> <delimiter, ]> <operator, +> <?, '> <?, ';> 
-<keyword, end> <?, ;> 
-<keyword, end> <?, ;> 
+<keyword function "function"> <identifier identifier "getCharacterCode"> <undefined "(character:"> <identifier identifier "char"> <undefined "):"> <keyword string "string"> <delimiter ";"> 
+<keyword const "const"> 
+<identifier identifier "translationArray"> <delimiter ":"> <keyword array "array"> <delimiter "["> <number "0..25"> <delimiter "]"> <keyword of "of"> <keyword string "string"> <undefined "="> <undefined "('.-',"> <literal "-..."> <delimiter ","> <literal "-.-."> <delimiter ","> <literal "-.."> <delimiter ","> <literal "."> <delimiter ","> <literal "..-."> <delimiter ","> <literal "--."> <delimiter ","> <literal "...."> <delimiter ","> <literal ".."> <delimiter ","> <literal ".---"> <delimiter ","> <literal "-.-"> <delimiter ","> <literal ".-.."> <delimiter ","> <literal "--"> <delimiter ","> <literal "-."> <delimiter ","> <literal "---"> <delimiter ","> <literal ".--."> <delimiter ","> <literal "--.-"> <delimiter ","> <literal ".-."> <delimiter ","> <literal "..."> <delimiter ","> <literal "-"> <delimiter ","> <literal "..-"> <delimiter ","> <literal "...-"> <delimiter ","> <literal ".--"> <delimiter ","> <literal "-..-"> <delimiter ","> <literal "-.--"> <delimiter ","> <literal "--.."> <undefined ");"> 
+<keyword begin "begin"> 
+<operator identifier "if"> <identifier identifier "character"> <undefined "="> <literal " "> <keyword then "then"> 
+<identifier identifier "getCharacterCode"> <delimiter ":"> <undefined "="> <literal "| "> 
+<keyword else "else"> 
+<keyword begin "begin"> 
+<identifier identifier "getCharacterCode"> <delimiter ":"> <undefined "="> <identifier identifier "translationArray"> <delimiter "["> <identifier identifier "ord"> <undefined "(character)"> <undefined "-"> <number "65"> <delimiter "]"> <undefined "+"> <literal " "> <delimiter ";"> 
+<keyword end "end"> <delimiter ";"> 
+<keyword end "end"> <delimiter ";"> 
 
-<keyword, procedure> <?, main> <?, ();> 
-<keyword, var> 
-<?, userString> <delimiter, ,> <?, codedString> <operator, :> <keyword, string> <?, ;> 
-<?, count> <operator, :> <?, integer> <?, ;> 
-<keyword, begin> 
-<?, write> <?, ('> <?, Enter> <?, a> <keyword, string> <operator, :> <?, ');> 
-<?, readln> <operator, (> <?, userString> <?, );> 
-<operator, if> <?, checkUserInput> <operator, (> <?, upcase> <operator, (> <?, userString> <?, ))> <keyword, then> 
-<keyword, begin> 
-<operator, for> <?, count> <operator, :=> <?, 1> <keyword, to> <?, length> <operator, (> <?, userString> <operator, )> <keyword, do> 
-<keyword, begin> 
-<?, codedString> <operator, :=> <?, concat> <operator, (> <?, codedString> <delimiter, ,> <?, getCharacterCode> <operator, (> <?, upcase> <operator, (> <?, userString> <delimiter, [> <?, count> <?, ])));> 
-<keyword, end> <?, ;> 
-<?, writeln> <operator, (> <?, codedString> <?, );> 
-<keyword, end> 
-<keyword, else> 
-<?, writeln> <?, ('> <?, Invalid> <?, input> <?, !');> 
-<keyword, end> <?, ;> 
-
-<keyword, begin> 
-<?, main> <?, ();> 
-<?, readln> <?, ;> 
-<keyword, end> <delimiter, .> 
+<keyword procedure "procedure"> <identifier identifier "main"> <undefined "();"> 
+<keyword var "var"> 
+<identifier identifier "userString"> <delimiter ","> <identifier identifier "codedString"> <delimiter ":"> <keyword string "string"> <delimiter ";"> 
+<identifier identifier "count"> <delimiter ":"> <identifier identifier "integer"> <delimiter ";"> 
+<keyword begin "begin"> 

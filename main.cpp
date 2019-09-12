@@ -4,64 +4,117 @@
 #include <map>
 #include <unordered_map>
 #include <string>
+#include <set>
 #include <vector>
 
 using namespace std;
 
-struct token {
-	string type, lexem;
-	token(string type, string lexem) : type(type), lexem(lexem) {}
+struct token_record {
+	string lexem, type;
+	int first_appearance_line;
+	token_record(string lexem, string type, int first_appearance) : lexem(lexem), type(type), first_appearance_line(first_appearance) {}
 };
 
-vector<token> Result;
-unordered_map<string, string> Mp = { {"Absolute", "keyword"}, {"array", "keyword"}, {"asm", "keyword"}, {"begin", "keyword"}, {"const", "keyword"}, {"constructor", "keyword"}, {"destructor", "keyword"}, {"div", "keyword"}, {"do", "keyword"}, {"downto", "keyword"}, {"else", "keyword"}, {"end", "keyword"}, {"file", "keyword"}, {"function", "keyword"}, {"implementation", "keyword"}, {"in", "keyword"}, {"inherited", "keyword"}, {"inline", "keyword"}, {"interface", "keyword"}, {"label", "keyword"}, {"nil", "keyword"}, {"object", "keyword"}, {"of", "keyword"}, {"operator", "keyword"}, {"packed", "keyword"}, {"procedure", "keyword"}, {"program", "keyword"}, {"record", "keyword"}, {"reintroduce", "keyword"}, {"repeat", "keyword"}, {"self", "keyword"}, {"string", "keyword"}, {"then", "keyword"}, {"to", "keyword"}, {"type", "keyword"}, {"unit", "keyword"}, {"uses", "keyword"}, {"var", "keyword"}, {"and", "operator"}, {"case", "operator"}, {"for", "operator"}, {"goto", "operator"}, {"if", "operator"}, {"mod", "operator"}, {"not", "operator"}, {"or", "operator"}, {"set", "operator"}, {"shl", "operator"}, {"shr", "operator"}, {"until", "operator"}, {"while", "operator"}, {"with", "operator"}, {"xor", "operator"}, {"+", "operator"}, {"-", "operator"}, {"*", "operator"}, {"/", "operator"}, {"=", "operator"}, {"<", "operator"}, {">", "operator"}, {"(", "operator"}, {")", "operator"}, {":", "operator"}, {"^", "operator"}, {"@", "operator"}, {"$", "operator"}, {"#", "operator"}, {"&", "operator"}, {"%", "operator"}, {"<<", "operator"}, {">>", "operator"}, {"**", "operator"}, {"<>", "operator"}, {"><", "operator "}, {"<=", "operator "}, {">=", "operator "}, {":=", "operator"}, {"+=", "operator"}, {"-=", "operator"}, {"*=", "operator"}, {"/=", "operator"}, {"(*", "delimiter"}, {"*)", "delimiter"}, {"(.", "delimiter"}, {".)", "delimiter"}, {"//", "delimiter"}, {"{", "delimiter"}, {"}", "delimiter"}, {"[", "delimiter"}, {"]", "delimiter"}, {".", "delimiter"}, {",", "delimiter"} };
-string source_code; // remove it from here
+struct token {
+	string name;
+	token_record* link;
+	string lexem; // only if link == nullptr
+	token(string name, token_record* link = nullptr, string lexem = "") : name(name), link(link), lexem(lexem) {}
+};
 
-bool letter(char a) {
-	return 'a' <= a && a <= 'z' || 'A' <= a && a <= 'Z';
-}
+//vector<record> Result;
+unordered_map<string, token_record*> Mp;
+set<string> Delimiters = { "(*", "*)", "(.", ".)", "//", "{", "}", "[", "]", ".", ",", "..", "...", ";", ":"};
 
-bool digit(char a) {
-	return '0' <= a && a <= '9';
-}
 
-bool space(char a) {
-	return a == ' ' || a == '\n' || a == '\t'; // Add some white spaces
-}
+// OPERATORS
 
-token parsenext(string::iterator &it) {
-	while (space(*it))
+
+token parsenext(string::iterator &it, string::iterator end_of_str, int line_number) {
+	while (isblank(*it))
 		it++;
 
-	string current;
-	while (it != source_code.end() && (letter(*it) || digit(*it))) {
-		current.push_back(*it);
+	string lexem;
+	
+	if (isalpha(*it)) { // identifier or keyword
+
+		while (it != end_of_str && (isalpha(*it) || isdigit(*it))) {
+			lexem.push_back(*it);
+			it++;
+		}
+
+		if (Mp.count(lexem) == 0) // not existing identifier
+			Mp[lexem] = new token_record(lexem, "identifier", line_number);
+
+		if (Mp[lexem]->type == "keyword") 
+			return token(lexem, Mp[lexem]); // keyword
+		else
+			return token("identifier", Mp[lexem]); // identifier
+
+	}
+	else if (*it == '\'') { // literal
+		
 		it++;
-	}
+		while (it != end_of_str && *it != '\'') {
+			lexem.push_back(*it);
+			it++;
+		}
+		if (it != end_of_str && *it == '\'') it++;
 
-	if (current.size() == 0) {
-		while (it != source_code.end() && !letter(*it) && !digit(*it) && !space(*it))
-			current.push_back(*it), it++;
+		return token("literal", nullptr, lexem);
 	}
+	else if (isdigit(*it)) { // number
 
-	if (Mp.count(current))
-		return token(Mp[current], current);
-	else
-		return token("?", current);
+		while (it != end_of_str && (isdigit(*it) || *it == '.')) {
+			lexem.push_back(*it);
+			it++;
+		}
+
+		return token("number", nullptr, lexem);
+	}
+	else if (Delimiters.count(string(1, *it))) { // delimiters
+		lexem = string(1, *it);
+		it++;
+		return token("delimiter", nullptr, lexem);
+	}
+	else { // undefined
+		while (it != end_of_str && !isblank(*it)) {
+			lexem.push_back(*it);
+			it++;
+		}
+
+		return token("undefined", nullptr, lexem);
+	}
 }
+
 
 int main() {
 	freopen("in.txt", "r", stdin);
 	freopen("out.txt", "w", stdout);
 
+	vector<string> Keywords = { "downto", "do", "const", "absolute", "in", "destructor", "var", "begin", "array", "div", "asm", "constructor", "interface", "else", "end", "repeat", "file", "function", "implementation", "inherited", "packed", "inline", "operator", "label", "nil", "object", "of", "procedure", "program", "record", "uses", "reintroduce", "self", "string", "then", "to", "type", "unit" };
+	vector<string> Operators = { "/", "xor", "goto", "and", "until", ":=", "+", "set", "mod", ">", "*", "=", "while", "-", "shl", "case", "for", "if", "not", ")", "shr", "or", "with", "<", "(", ":", "^", "@", "$", "#", "&", "%", "<<", ">>", "**", "<>", "+=", "-=", "*=", "/=", ">=", "><", "<=" };
+
+	for (auto elem : Delimiters) Mp[elem] = new token_record(elem, "delimiter", -1);
+	for (auto elem : Keywords) Mp[elem] = new token_record(elem, "keyword", -1);
+	for (auto elem : Operators) Mp[elem] = new token_record(elem, "operator", -1);
+
+	string source_code;
+
+	int line_number = 1;
 	while (getline(cin, source_code)) {
 		auto temp = source_code.begin();
 
 		while (temp != source_code.end()) {
-			auto res = parsenext(temp);
-			cout << "<" << res.type << ", " << res.lexem << "> ";
+			auto res = parsenext(temp, source_code.end(), line_number);
+			if (res.link != nullptr)
+				cout << "<" << res.link->type << " " << res.name << " \"" << res.link->lexem << "\"> ";
+			else
+				cout << "<" << res.name << " \"" << res.lexem << "\"> ";
 		}
+
 		cout << "\n";
+		line_number++;
 	}
 
 
