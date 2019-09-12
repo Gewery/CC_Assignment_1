@@ -1,4 +1,4 @@
-<keyword "program"> <identifier "morsecoding"> <delimiter ";"> 
+<keyword "program"> <identifier "_morsecoding"> <delimiter ";"> 
 
 <keyword "function"> <identifier "checkuserinput"> <operator "("> <identifier "userstring"> <operator ":"> <keyword "string"> <operator ")"> <operator ":"> <identifier "boolean"> <delimiter ";"> 
 <keyword "var"> 

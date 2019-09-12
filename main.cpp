@@ -37,9 +37,9 @@ token parsenext(string::iterator &it, string::iterator end_of_str, int line_numb
 
 	string lexem;
 	
-	if (isalpha(*it)) { // identifier, keyword or operator
+	if (isalpha(*it) || (*it) == '_') { // identifier, keyword or operator
 
-		while (it != end_of_str && (isalpha(*it) || isdigit(*it))) {
+		while (it != end_of_str && (isalpha(*it) || isdigit(*it) || (*it) == '_')) {
 			lexem.push_back(*it);
 			it++;
 		}
