@@ -24,10 +24,6 @@ struct token {
 
 //vector<record> Result;
 unordered_map<string, token_record*> Mp;
-set<string> Delimiters = { "(*", "*)", "(.", ".)", "//", "{", "}", "[", "]", ".", ",", "..", "...", ";", ":"};
-
-
-// OPERATORS
 
 
 token parsenext(string::iterator &it, string::iterator end_of_str, int line_number) {
@@ -36,7 +32,7 @@ token parsenext(string::iterator &it, string::iterator end_of_str, int line_numb
 
 	string lexem;
 	
-	if (isalpha(*it)) { // identifier or keyword
+	if (isalpha(*it)) { // identifier, keyword or operator
 
 		while (it != end_of_str && (isalpha(*it) || isdigit(*it))) {
 			lexem.push_back(*it);
@@ -46,8 +42,8 @@ token parsenext(string::iterator &it, string::iterator end_of_str, int line_numb
 		if (Mp.count(lexem) == 0) // not existing identifier
 			Mp[lexem] = new token_record(lexem, "identifier", line_number);
 
-		if (Mp[lexem]->type == "keyword") 
-			return token(lexem, Mp[lexem]); // keyword
+		if (Mp[lexem]->type == "keyword" || Mp[lexem]->type == "operator")
+			return token(lexem, Mp[lexem]); // keyword or operator
 		else
 			return token("identifier", Mp[lexem]); // identifier
 
@@ -65,25 +61,23 @@ token parsenext(string::iterator &it, string::iterator end_of_str, int line_numb
 	}
 	else if (isdigit(*it)) { // number
 
-		while (it != end_of_str && (isdigit(*it) || *it == '.')) {
+		while (it != end_of_str && (isdigit(*it) || (*it == '.' && it + 1 != end_of_str && isdigit(*(it + 1))))) {
 			lexem.push_back(*it);
 			it++;
 		}
 
 		return token("number", nullptr, lexem);
 	}
-	else if (Delimiters.count(string(1, *it))) { // delimiters
-		lexem = string(1, *it);
-		it++;
-		return token("delimiter", nullptr, lexem);
-	}
-	else { // undefined
-		while (it != end_of_str && !isblank(*it)) {
+	else  { // delimiter, operator or undefined
+		while (it != end_of_str && !isblank(*it) && Mp[lexem] == nullptr) {
 			lexem.push_back(*it);
 			it++;
 		}
-
-		return token("undefined", nullptr, lexem);
+		
+		if (Mp[lexem] != nullptr && (Mp[lexem]->type == "delimiter" || Mp[lexem]->type == "operator"))
+			return token(lexem, Mp[lexem]);
+		else
+			return token("undefined", nullptr, lexem);
 	}
 }
 
@@ -93,7 +87,10 @@ int main() {
 	freopen("out.txt", "w", stdout);
 
 	vector<string> Keywords = { "downto", "do", "const", "absolute", "in", "destructor", "var", "begin", "array", "div", "asm", "constructor", "interface", "else", "end", "repeat", "file", "function", "implementation", "inherited", "packed", "inline", "operator", "label", "nil", "object", "of", "procedure", "program", "record", "uses", "reintroduce", "self", "string", "then", "to", "type", "unit" };
-	vector<string> Operators = { "/", "xor", "goto", "and", "until", ":=", "+", "set", "mod", ">", "*", "=", "while", "-", "shl", "case", "for", "if", "not", ")", "shr", "or", "with", "<", "(", ":", "^", "@", "$", "#", "&", "%", "<<", ">>", "**", "<>", "+=", "-=", "*=", "/=", ">=", "><", "<=" };
+	set<string> Delimiters = { "(*", "*)", "(.", ".)", "//", "{", "}", "[", "]", ".", ",", "..", "...", ";", ":" };
+	set<string> Operators = { "/", "xor", "goto", "and", "until", ":=", "+", "set", "mod", ">", "*", "=", "while", "-", "shl", "case", "for", "if", "not", ")", "shr", "or", "with", "<", "(", ":", "^", "@", "$", "#", "&", "%", "<<", ">>", "**", "<>", "+=", "-=", "*=", "/=", ">=", "><", "<=" };
+
+	//TODO: change to vectors
 
 	for (auto elem : Delimiters) Mp[elem] = new token_record(elem, "delimiter", -1);
 	for (auto elem : Keywords) Mp[elem] = new token_record(elem, "keyword", -1);
@@ -108,7 +105,7 @@ int main() {
 		while (temp != source_code.end()) {
 			auto res = parsenext(temp, source_code.end(), line_number);
 			if (res.link != nullptr)
-				cout << "<" << res.link->type << " " << res.name << " \"" << res.link->lexem << "\"> ";
+				cout << "<" << res.link->type << " \"" << res.link->lexem << "\"> "; //cout << "<" << res.link->type << " " << res.name << " \"" << res.link->lexem << "\"> ";
 			else
 				cout << "<" << res.name << " \"" << res.lexem << "\"> ";
 		}
