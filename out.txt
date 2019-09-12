@@ -1,46 +1,46 @@
-<keyword "program"> <identifier "MorseCoding"> <delimiter ";"> 
+<keyword "program"> <identifier "morsecoding"> <delimiter ";"> 
 
-<keyword "function"> <identifier "checkUserInput"> <operator "("> <identifier "userString"> <operator ":"> <keyword "string"> <operator ")"> <operator ":"> <identifier "boolean"> <delimiter ";"> 
+<keyword "function"> <identifier "checkuserinput"> <operator "("> <identifier "userstring"> <operator ":"> <keyword "string"> <operator ")"> <operator ":"> <identifier "boolean"> <delimiter ";"> 
 <keyword "var"> 
 <identifier "valid"> <operator ":"> <identifier "boolean"> <delimiter ";"> 
 <identifier "count"> <operator ":"> <identifier "integer"> <delimiter ";"> 
 <keyword "begin"> 
 <identifier "valid"> <operator ":"> <operator "="> <identifier "true"> <delimiter ";"> 
-<operator "for"> <identifier "count"> <operator ":"> <operator "="> <number "1"> <keyword "to"> <identifier "length"> <operator "("> <identifier "userString"> <operator ")"> <keyword "do"> 
-<operator "if"> <operator "("> <operator "("> <identifier "ord"> <operator "("> <identifier "userString"> <delimiter "["> <identifier "count"> <delimiter "]"> <operator ")"> <operator "<"> <number "65"> <operator ")"> <operator "or"> <operator "("> <identifier "ord"> <operator "("> <identifier "userString"> <delimiter "["> <identifier "count"> <delimiter "]"> <operator ")"> <operator ">"> <number "90"> <operator ")"> <operator ")"> <operator "and"> <operator "("> <identifier "userString"> <delimiter "["> <identifier "count"> <delimiter "]"> <operator "<"> <operator ">"> <literal " "> <operator ")"> <keyword "then"> 
+<operator "for"> <identifier "count"> <operator ":"> <operator "="> <number "1"> <keyword "to"> <identifier "length"> <operator "("> <identifier "userstring"> <operator ")"> <keyword "do"> 
+<operator "if"> <operator "("> <operator "("> <identifier "ord"> <operator "("> <identifier "userstring"> <delimiter "["> <identifier "count"> <delimiter "]"> <operator ")"> <operator "<"> <number "65"> <operator ")"> <operator "or"> <operator "("> <identifier "ord"> <operator "("> <identifier "userstring"> <delimiter "["> <identifier "count"> <delimiter "]"> <operator ")"> <operator ">"> <number "90"> <operator ")"> <operator ")"> <operator "and"> <operator "("> <identifier "userstring"> <delimiter "["> <identifier "count"> <delimiter "]"> <operator "<"> <operator ">"> <literal " "> <operator ")"> <keyword "then"> 
 <identifier "valid"> <operator ":"> <operator "="> <identifier "false"> <delimiter ";"> 
-<identifier "checkUserInput"> <operator ":"> <operator "="> <identifier "valid"> <delimiter ";"> 
+<identifier "checkuserinput"> <operator ":"> <operator "="> <identifier "valid"> <delimiter ";"> 
 <keyword "end"> <delimiter ";"> 
 
-<keyword "function"> <identifier "getCharacterCode"> <operator "("> <identifier "character"> <operator ":"> <identifier "char"> <operator ")"> <operator ":"> <keyword "string"> <delimiter ";"> 
+<keyword "function"> <identifier "getcharactercode"> <operator "("> <identifier "character"> <operator ":"> <identifier "char"> <operator ")"> <operator ":"> <keyword "string"> <delimiter ";"> 
 <keyword "const"> 
-<identifier "translationArray"> <operator ":"> <keyword "array"> <delimiter "["> <number "0"> <delimiter "."> <delimiter "."> <number "25"> <delimiter "]"> <keyword "of"> <keyword "string"> <operator "="> <operator "("> <literal ".-"> <delimiter ","> <literal "-..."> <delimiter ","> <literal "-.-."> <delimiter ","> <literal "-.."> <delimiter ","> <literal "."> <delimiter ","> <literal "..-."> <delimiter ","> <literal "--."> <delimiter ","> <literal "...."> <delimiter ","> <literal ".."> <delimiter ","> <literal ".---"> <delimiter ","> <literal "-.-"> <delimiter ","> <literal ".-.."> <delimiter ","> <literal "--"> <delimiter ","> <literal "-."> <delimiter ","> <literal "---"> <delimiter ","> <literal ".--."> <delimiter ","> <literal "--.-"> <delimiter ","> <literal ".-."> <delimiter ","> <literal "..."> <delimiter ","> <literal "-"> <delimiter ","> <literal "..-"> <delimiter ","> <literal "...-"> <delimiter ","> <literal ".--"> <delimiter ","> <literal "-..-"> <delimiter ","> <literal "-.--"> <delimiter ","> <literal "--.."> <operator ")"> <delimiter ";"> 
+<identifier "translationarray"> <operator ":"> <keyword "array"> <delimiter "["> <number "0"> <delimiter "."> <delimiter "."> <number "25"> <delimiter "]"> <keyword "of"> <keyword "string"> <operator "="> <operator "("> <literal ".-"> <delimiter ","> <literal "-..."> <delimiter ","> <literal "-.-."> <delimiter ","> <literal "-.."> <delimiter ","> <literal "."> <delimiter ","> <literal "..-."> <delimiter ","> <literal "--."> <delimiter ","> <literal "...."> <delimiter ","> <literal ".."> <delimiter ","> <literal ".---"> <delimiter ","> <literal "-.-"> <delimiter ","> <literal ".-.."> <delimiter ","> <literal "--"> <delimiter ","> <literal "-."> <delimiter ","> <literal "---"> <delimiter ","> <literal ".--."> <delimiter ","> <literal "--.-"> <delimiter ","> <literal ".-."> <delimiter ","> <literal "..."> <delimiter ","> <literal "-"> <delimiter ","> <literal "..-"> <delimiter ","> <literal "...-"> <delimiter ","> <literal ".--"> <delimiter ","> <literal "-..-"> <delimiter ","> <literal "-.--"> <delimiter ","> <literal "--.."> <operator ")"> <delimiter ";"> 
 <keyword "begin"> 
 <operator "if"> <identifier "character"> <operator "="> <literal " "> <keyword "then"> 
-<identifier "getCharacterCode"> <operator ":"> <operator "="> <literal "| "> 
+<identifier "getcharactercode"> <operator ":"> <operator "="> <literal "| "> 
 <keyword "else"> 
 <keyword "begin"> 
-<identifier "getCharacterCode"> <operator ":"> <operator "="> <identifier "translationArray"> <delimiter "["> <identifier "ord"> <operator "("> <identifier "character"> <operator ")"> <operator "-"> <number "65"> <delimiter "]"> <operator "+"> <literal " "> <delimiter ";"> 
+<identifier "getcharactercode"> <operator ":"> <operator "="> <identifier "translationarray"> <delimiter "["> <identifier "ord"> <operator "("> <identifier "character"> <operator ")"> <operator "-"> <number "65"> <delimiter "]"> <operator "+"> <literal " "> <delimiter ";"> 
 <keyword "end"> <delimiter ";"> 
 <keyword "end"> <delimiter ";"> 
 
 <keyword "procedure"> <identifier "main"> <operator "("> <operator ")"> <delimiter ";"> 
 <keyword "var"> 
-<identifier "userString"> <delimiter ","> <identifier "codedString"> <operator ":"> <keyword "string"> <delimiter ";"> 
+<identifier "userstring"> <delimiter ","> <identifier "codedstring"> <operator ":"> <keyword "string"> <delimiter ";"> 
 <identifier "count"> <operator ":"> <identifier "integer"> <delimiter ";"> 
 <keyword "begin"> 
-<identifier "write"> <operator "("> <literal "Enter a string: "> <operator ")"> <delimiter ";"> 
-<identifier "readln"> <operator "("> <identifier "userString"> <operator ")"> <delimiter ";"> 
-<operator "if"> <identifier "checkUserInput"> <operator "("> <identifier "upcase"> <operator "("> <identifier "userString"> <operator ")"> <operator ")"> <keyword "then"> 
+<identifier "write"> <operator "("> <literal "enter a string: "> <operator ")"> <delimiter ";"> 
+<identifier "readln"> <operator "("> <identifier "userstring"> <operator ")"> <delimiter ";"> 
+<operator "if"> <identifier "checkuserinput"> <operator "("> <identifier "upcase"> <operator "("> <identifier "userstring"> <operator ")"> <operator ")"> <keyword "then"> 
 <keyword "begin"> 
-<operator "for"> <identifier "count"> <operator ":"> <operator "="> <number "1"> <keyword "to"> <identifier "length"> <operator "("> <identifier "userString"> <operator ")"> <keyword "do"> 
+<operator "for"> <identifier "count"> <operator ":"> <operator "="> <number "1"> <keyword "to"> <identifier "length"> <operator "("> <identifier "userstring"> <operator ")"> <keyword "do"> 
 <keyword "begin"> 
-<identifier "codedString"> <operator ":"> <operator "="> <identifier "concat"> <operator "("> <identifier "codedString"> <delimiter ","> <identifier "getCharacterCode"> <operator "("> <identifier "upcase"> <operator "("> <identifier "userString"> <delimiter "["> <identifier "count"> <delimiter "]"> <operator ")"> <operator ")"> <operator ")"> <delimiter ";"> 
+<identifier "codedstring"> <operator ":"> <operator "="> <identifier "concat"> <operator "("> <identifier "codedstring"> <delimiter ","> <identifier "getcharactercode"> <operator "("> <identifier "upcase"> <operator "("> <identifier "userstring"> <delimiter "["> <identifier "count"> <delimiter "]"> <operator ")"> <operator ")"> <operator ")"> <delimiter ";"> 
 <keyword "end"> <delimiter ";"> 
-<identifier "writeln"> <operator "("> <identifier "codedString"> <operator ")"> <delimiter ";"> 
+<identifier "writeln"> <operator "("> <identifier "codedstring"> <operator ")"> <delimiter ";"> 
 <keyword "end"> 
 <keyword "else"> 
-<identifier "writeln"> <operator "("> <literal "Invalid input!"> <operator ")"> <delimiter ";"> 
+<identifier "writeln"> <operator "("> <literal "invalid input!"> <operator ")"> <delimiter ";"> 
 <keyword "end"> <delimiter ";"> 
 
 <keyword "begin"> 

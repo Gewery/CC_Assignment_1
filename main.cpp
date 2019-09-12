@@ -44,10 +44,8 @@ token parsenext(string::iterator &it, string::iterator end_of_str, int line_numb
 			it++;
 		}
 
-		string lowercase_lexem = tolowerst(lexem);
-
-		if (Mp.count(lowercase_lexem) && (Mp[lowercase_lexem]->type == "keyword" || Mp[lowercase_lexem]->type == "operator"))
-			return token(lowercase_lexem, Mp[lowercase_lexem]); // keyword or operator
+		if (Mp.count(lexem) && (Mp[lexem]->type == "keyword" || Mp[lexem]->type == "operator"))
+			return token(lexem, Mp[lexem]); // keyword or operator
 		else {
 			if (!Mp.count(lexem))
 				Mp[lexem] = new token_record(lexem, "identifier", line_number);
@@ -104,6 +102,7 @@ int main() {
 
 	int line_number = 1;
 	while (getline(cin, source_code)) {
+		source_code = tolowerst(source_code);
 		auto temp = source_code.begin();
 
 		while (temp != source_code.end()) {
