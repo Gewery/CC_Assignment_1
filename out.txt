@@ -46,3 +46,4 @@
 <keyword "begin"> 
 <identifier "main"> <operator "("> <operator ")"> <delimiter ";"> 
 <identifier "readln"> <delimiter ";"> 
+<keyword "end"> <delimiter "."> 

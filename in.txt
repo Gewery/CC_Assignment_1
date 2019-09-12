@@ -15,25 +15,25 @@ end;
 function getCharacterCode(character: char): string;
 const
   translationArray: array [0..25] of string = ('.-', '-...', '-.-.', '-..', '.', '..-.', '--.', '....', '..', '.---', '-.-', '.-..', '--', '-.', '---', '.--.', '--.-', '.-.', '...', '-', '..-', '...-', '.--', '-..-', '-.--', '--..');
-begin
+Begin
   if character = ' ' then
     getCharacterCode := '| '
   else
     begin
       getCharacterCode := translationArray[ord(character) - 65] + ' ';
     end;
-end;
+eND;
 
-procedure main();
+procEDure main();
 var
   userString, codedString: string;
   count: integer;
 begin
   write('Enter a string: ');
   readln(userString);
-  if checkUserInput(upcase(userString)) then
+  iF checkUserInput(upcase(userString)) then
     begin
-      for count := 1 to length(userString) do
+      For count := 1 to length(userString) do
         begin
           codedString := concat(codedString, getCharacterCode(upcase(userString[count])));
         end;

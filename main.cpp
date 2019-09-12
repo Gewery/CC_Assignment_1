@@ -25,6 +25,11 @@ struct token {
 vector<token> Result;
 unordered_map<string, token_record*> Mp;
 
+string tolowerst(string &st) {
+	string res;
+	for (int i = 0; i < st.size(); res.push_back(tolower(st[i])), i++);
+	return res;
+}
 
 token parsenext(string::iterator &it, string::iterator end_of_str, int line_number) {
 	while (isblank(*it))
@@ -39,13 +44,15 @@ token parsenext(string::iterator &it, string::iterator end_of_str, int line_numb
 			it++;
 		}
 
-		if (Mp.count(lexem) == 0) // not existing identifier
-			Mp[lexem] = new token_record(lexem, "identifier", line_number);
+		string lowercase_lexem = tolowerst(lexem);
 
-		if (Mp[lexem]->type == "keyword" || Mp[lexem]->type == "operator")
-			return token(lexem, Mp[lexem]); // keyword or operator
-		else
+		if (Mp.count(lowercase_lexem) && (Mp[lowercase_lexem]->type == "keyword" || Mp[lowercase_lexem]->type == "operator"))
+			return token(lowercase_lexem, Mp[lowercase_lexem]); // keyword or operator
+		else {
+			if (!Mp.count(lexem))
+				Mp[lexem] = new token_record(lexem, "identifier", line_number);
 			return token("identifier", Mp[lexem]); // identifier
+		}
 
 	}
 	else if (*it == '\'') { // literal
@@ -87,7 +94,7 @@ int main() {
 
 	vector<string> Keywords = { "downto", "do", "const", "absolute", "in", "destructor", "var", "begin", "array", "div", "asm", "constructor", "interface", "else", "end", "repeat", "file", "function", "implementation", "inherited", "packed", "inline", "operator", "label", "nil", "object", "of", "procedure", "program", "record", "uses", "reintroduce", "self", "string", "then", "to", "type", "unit" };
 	vector<string> Delimiters = { "(*", "*)", "(.", ".)", "//", "{", "}", "[", "]", ".", ",", "..", "...", ";", ":" };
-	vector<string> Operators = { "/", "xor", "goto", "and", "until", ":=", "+", "set", "mod", ">", "*", "=", "while", "-", "shl", "case", "for", "if", "not", ")", "shr", "or", "with", "<", "(", ":", "^", "@", "$", "#", "&", "%", "<<", ">>", "**", "<>", "+=", "-=", "*=", "/=", ">=", "><", "<=" };
+	vector<string> Operators = { "/", "xor", "goto", "and", "until", ":=", "+", "set", "mod", ">", "*", "=", "while", "-", "shl", "case", "for", "if", "not", ")", "shr", "or", "with", "<", "(", ":", "^", "@", "$", "#", "&", "%", "<<", ">>", "**", "<>", "+=", "-=", "*=", "/=", ">=", "><", "<=", "!", "|", "~" };
 
 	for (auto elem : Delimiters) Mp[elem] = new token_record(elem, "delimiter", -1);
 	for (auto elem : Keywords) Mp[elem] = new token_record(elem, "keyword", -1);
