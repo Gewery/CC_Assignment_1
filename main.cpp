@@ -64,7 +64,12 @@ token parsenext(string::iterator &it, string::iterator end_of_str, int line_numb
 
 		return token("literal", nullptr, lexem);
 	}
-	else if (isdigit(*it)) { // number
+	else if (isdigit(*it) || (*it == '-' && it + 1 != end_of_str && isdigit(*(it + 1)))) { // number
+
+		if (*it == '-') {
+			lexem.push_back(*it);
+			it++;
+		}
 
 		while (it != end_of_str && (isdigit(*it) || (*it == '.' && it + 1 != end_of_str && isdigit(*(it + 1))))) {
 			lexem.push_back(*it);
@@ -75,6 +80,11 @@ token parsenext(string::iterator &it, string::iterator end_of_str, int line_numb
 	}
 	else  { // delimiter, operator or undefined
 		while (it != end_of_str && !isblank(*it) && !Mp.count(lexem)) {
+			lexem.push_back(*it);
+			it++;
+		}
+
+		if (it != end_of_str && *it == '/' && lexem == "/") {
 			lexem.push_back(*it);
 			it++;
 		}
@@ -108,6 +118,10 @@ int main() {
 		while (temp != source_code.end()) {
 			auto res = parsenext(temp, source_code.end(), line_number);
 			
+			if (res.name == "//") {
+				break;
+			}
+
 			Result.push_back(res);
 			
 			if (res.link != nullptr)

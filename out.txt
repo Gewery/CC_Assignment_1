@@ -1,5 +1,7 @@
 <keyword "program"> <identifier "_morsecoding"> <delimiter ";"> 
-
+<number "-1"> 
+<number "1.345"> 
+<number "4"> 
 <keyword "function"> <identifier "checkuserinput"> <operator "("> <identifier "userstring"> <operator ":"> <keyword "string"> <operator ")"> <operator ":"> <identifier "boolean"> <delimiter ";"> 
 <keyword "var"> 
 <identifier "valid"> <operator ":"> <identifier "boolean"> <delimiter ";"> 

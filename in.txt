@@ -1,5 +1,7 @@
-program _MorseCoding;
-
+program _MorseCoding; //khdbajdbha
+-1
+1.345
+4
 function checkUserInput(userString: string): boolean;
 var
   valid: boolean;
